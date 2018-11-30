@@ -6,6 +6,9 @@ let config = {
       useCreateIndex: true,
       useNewUrlParser: true
     }
+  },
+  graphQl: {
+    url: 'http://localhost:3000/graphql'
   }
 };
 

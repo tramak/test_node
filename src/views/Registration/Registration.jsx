@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {connect, Form} from 'react-validation-boo';
+import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,6 +14,18 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+// graphql
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+
+const repoQuery = gql`
+  {
+  regions {
+    id
+    label
+  }
+} 
+`;
 
 const styles = {
   cardCategoryWhite: {
@@ -34,8 +47,29 @@ const styles = {
 };
 
 class Registration extends Component {
+  getAllRegions() {
+    if(this.props.data.loading) {
+      return <MenuItem value="" disabled>Идёт загрузка...</MenuItem>;
+    } else {
+      return this.props.data.regions.map((item) => <MenuItem key={'region_' + item.id} value={item.id}>{item.label}</MenuItem>);
+    }
+  }
+  sendForm = (event) => {
+    event.preventDefault();
+
+    if(this.props.vBoo.isValid()) {
+      let data = this.props.vBoo.getValues();
+      console.log(data);
+    } else {
+      this.props.vBoo.showErrors();
+    }
+  };
   render() {
     const { classes } = this.props;
+    let buttonClass = classNames({
+      primary: true,
+      disabled: !this.props.vBoo.isValid()
+    });
 
     return (
       <Form connect={this.props.vBoo.connect}>
@@ -79,6 +113,17 @@ class Registration extends Component {
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
+                    <ValidateSelect
+                      name="region"
+                      formControlProps={{
+                        fullWidth: true
+                      }}>
+                      {this.getAllRegions()}
+                    </ValidateSelect>
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
                     <ValidateInput
                       name="email"
                       formControlProps={{
@@ -97,7 +142,7 @@ class Registration extends Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Зарегестрироваться</Button>
+                <Button color={buttonClass} onClick={this.sendForm}>Зарегестрироваться</Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -107,13 +152,13 @@ class Registration extends Component {
   }
 }
 
-export default connect({
+export default graphql(repoQuery)(connect({
   rules: () => ([
     [
-      ['name', 'surname', 'gender', 'email', 'phone'],
+      ['name', 'surname', 'gender', 'email', 'phone', 'region'],
       'required',
       {
-        error: 'Поле %name% обязательно для заполнения'
+        error: 'Обязательно для заполнения'
       }
     ],
     [
@@ -126,7 +171,8 @@ export default connect({
     surname: 'Фамилия',
     email: 'Электронная почта',
     phone: 'Телефон',
-    gender: 'Пол'
+    gender: 'Пол',
+    region: 'Регион'
   }),
   lang: 'ru'
-})(withStyles(styles)(Registration));
+})(withStyles(styles)(Registration)));

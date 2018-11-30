@@ -1,5 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Dashboard from '../dashboard';
+import ApolloWrapper from './apolloWrapper';
 
-render(<Dashboard {...window.__APP_INITIAL_STATE__} />, document.getElementById('root'));
+render(<ApolloWrapper {...window.__APP_INITIAL_STATE__} />, document.getElementById('root'));

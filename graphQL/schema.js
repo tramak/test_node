@@ -16,7 +16,9 @@ const BlogQueryRootType = new GraphQLObjectType({
     regions: {
       type: new GraphQLList(RegionsType),
       description: "Список всех регионов",
-      resolve: async () => await Regions.find({})
+      resolve: async () => await Regions.find({}, null, {
+        sort: {label: 1}
+      })
     },
   })
 });

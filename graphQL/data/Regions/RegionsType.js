@@ -18,6 +18,9 @@ const RegionsType = new GraphQLObjectType({
     name: {
       type: new GraphQLNonNull(GraphQLString)
     },
+    label: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
     zip: {
       type: GraphQLString
     },

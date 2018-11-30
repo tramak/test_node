@@ -15,10 +15,18 @@ function createRegionDb() {
     q.query = val;
     Kladr.getData(q, (err, result)=> {
       result['result'].forEach(function(item) {
+        if(item.typeShort === 'Респ' || item.typeShort === 'г') {
+          item.label = item.type + ' ' + item.name;
+        } else if(parseInt(item.id, 10) === 8600000000000) {
+          item.label = item.name;
+        } else {
+          item.label = item.name + ' ' + item.type;
+        }
+
         delete item.contentType;
         let region = new Region(item);
         region.save(function(err) {
-          if(err) throw err;
+          //if(err) throw err;
         });
       });
     });

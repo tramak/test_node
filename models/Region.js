@@ -4,10 +4,17 @@ var Schema = mongoose.Schema;
 let schema = new Schema({
   id: {
     type: Number,
+    unique: true,
     required: true
   },
   name: {
     type: String,
+    unique: true,
+    required: true
+  },
+  label: {
+    type: String,
+    unique: true,
     required: true
   },
   zip: String,
