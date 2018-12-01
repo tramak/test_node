@@ -16,13 +16,16 @@ import customInputStyle from "assets/jss/material-dashboard-react/components/cus
 class ValidateInput extends InputBoo {
   render() {
     const labelText = this.props.vBoo.getLabel();
-    const {
+    let {
       classes,
       formControlProps,
       name,
       labelProps,
-      inputProps
+      inputProps,
+      type
     } = this.props;
+
+    if(!type) type = 'text';
 
     const error = this.props.vBoo.hasError();
     const text = error ? this.props.vBoo.getError() : labelText;
@@ -58,6 +61,7 @@ class ValidateInput extends InputBoo {
             underline: underlineClasses
           }}
           id={name}
+          type={type}
           onChange={this.change} onBlur={this.blur}
           {...inputProps}
         />

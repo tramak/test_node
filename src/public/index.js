@@ -12,7 +12,7 @@ export default ({ body, title, initialState }) => {
         <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="/css/material-dashboard-react.css?v=1.5.0" type="text/css">
+        <link href="/css/material-dashboard-react.css?v=1.5.0" rel="stylesheet">
         <title>${title}</title>
         <script>window.__APP_INITIAL_STATE__ = ${initialState}</script>
     </head>

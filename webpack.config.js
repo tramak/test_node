@@ -84,7 +84,7 @@ module.exports = [
     module: {
       rules: rules
     },
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
   },
   {
     entry: {
@@ -101,6 +101,6 @@ module.exports = [
     module: {
       rules: rules
     },
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
   }
 ];

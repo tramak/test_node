@@ -1,7 +1,7 @@
 let mongoose = require('../libs/mongoose');
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-let schema = new Schema({
+let schemaRegion = new Schema({
   id: {
     type: Number,
     unique: true,
@@ -24,6 +24,6 @@ let schema = new Schema({
   contentType:String
 });
 
-let Region = mongoose.model('Region', schema);
+let Region = mongoose.model('Region', schemaRegion);
 
 module.exports = Region;

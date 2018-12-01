@@ -59,7 +59,22 @@ class Registration extends Component {
 
     if(this.props.vBoo.isValid()) {
       let data = this.props.vBoo.getValues();
-      console.log(data);
+      (async () => {
+        try {
+          let response = await (await fetch('/user-add', {
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              method: 'Post',
+              body: JSON.stringify(data)
+            })).json();
+          console.log('result', response);
+        } catch(e) {
+          console.log('Ошибка отправки')
+        }
+      })();
+
     } else {
       this.props.vBoo.showErrors();
     }
@@ -74,7 +89,7 @@ class Registration extends Component {
     return (
       <Form connect={this.props.vBoo.connect}>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={8}>
+          <GridItem xs={12} sm={12} md={10} lg={8}>
             <Card>
               <CardHeader color="primary">
                 <h2 className={classes.cardTitleWhite}>Регистрация</h2>
@@ -140,6 +155,26 @@ class Registration extends Component {
                     />
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <ValidateInput
+                      name="password"
+                      type="password"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <ValidateInput
+                      name="passwordRepeat"
+                      type="password"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
               </CardBody>
               <CardFooter>
                 <Button color={buttonClass} onClick={this.sendForm}>Зарегестрироваться</Button>
@@ -155,16 +190,17 @@ class Registration extends Component {
 export default graphql(repoQuery)(connect({
   rules: () => ([
     [
-      ['name', 'surname', 'gender', 'email', 'phone', 'region'],
+      ['name', 'surname', 'gender', 'email', 'phone', 'region', 'password', 'passwordRepeat'],
       'required',
       {
         error: 'Обязательно для заполнения'
       }
     ],
-    [
-      ['email'],
-      'required'
-    ]
+    ['email', 'email'],
+    ['passwordRepeat', 'compare', {
+      compareAttribute: 'password',
+      error: 'Пароли не совпадают'
+    }]
   ]),
   labels: () => ({
     name: 'Имя',
@@ -172,7 +208,9 @@ export default graphql(repoQuery)(connect({
     email: 'Электронная почта',
     phone: 'Телефон',
     gender: 'Пол',
-    region: 'Регион'
+    region: 'Регион',
+    password: 'Пароль',
+    passwordRepeat: 'Повторить пароль'
   }),
   lang: 'ru'
 })(withStyles(styles)(Registration)));

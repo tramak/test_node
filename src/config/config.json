@@ -1,0 +1,13 @@
+{
+  "port": 3001,
+  "mongoose" : {
+    "url": "mongodb://localhost/gosapis",
+    "options": {
+      "useCreateIndex": true,
+      "useNewUrlParser": true
+    }
+  },
+  "graphQl": {
+    "url": "http://localhost:3001/graphql"
+  }
+}

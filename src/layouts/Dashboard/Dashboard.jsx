@@ -16,8 +16,8 @@ import dashboardRoutes from "routes/dashboard.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
-import image from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import image from "assets/img/honey-bee.png";
+import logo from "public/apple-icon-114x114.png";
 
 const switchRoutes = (
   <Switch>
@@ -72,9 +72,9 @@ class App extends React.Component {
       <div className={classes.wrapper}>
         <Sidebar
           routes={dashboardRoutes}
-          logoText={"Creative Tim"}
-          logo={logo}
-          image={image}
+          logoText={"Gos Apis"}
+          logo={'/assets/' + logo}
+          image={'/assets/' + image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color="blue"

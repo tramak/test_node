@@ -19,7 +19,7 @@ const dashboardRoutes = [
     component: DashboardPage
   },
   {
-    path: "/registation",
+    path: "/registration",
     sidebarName: "Регистрация",
     navbarName: "Регистрация",
     icon: Person,
